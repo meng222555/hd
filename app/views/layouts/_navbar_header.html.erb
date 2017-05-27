@@ -1,0 +1,59 @@
+<nav class="navbar navbar-default" id="nav2">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to root_url, :class => 'home-logo osLight' do %>
+        <%= image_tag "logo.png" %>
+      <% end %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+
+        <%= render 'layouts/signup_xs' %>
+
+        <li><%= link_for_list_a_property :class => "visible-xs" %></li>
+        <% unless user_signed_in? %>
+          <li class="active">
+            <%= link_to home_owners_path, data: { turbolinks: false } do %>
+              Why DirectHome? <span class="sr-only">(current)</span>
+            <% end %>
+          </li>
+        <% else %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Listings <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'My Property Listings', user_listings_path %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to 'My Saved Listings', user_saved_listings_path %></li>
+            </ul>
+          </li>
+        <% end %>
+        
+        
+        <li><%= link_to 'Browse Listings', listings_path %></li>
+        <li><a href="/articles">Articles</a></li>
+        <% unless user_signed_in? %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">How It Works <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/how_it_works_owners">Home Owners</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="/how_it_works_seekers">Home Seekers</a></li>
+            </ul>
+          </li>
+        <% end %>
+        <li><a href="/faqs">FAQs</a></li>
+        <li><a href="/support">Support</a></li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

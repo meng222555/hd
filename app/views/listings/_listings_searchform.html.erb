@@ -1,0 +1,142 @@
+<div class="filter">
+  <div class="search-panel search-regular">
+  <%= search_form_for @q, class: "form-inline", :html => {:role => "search"} do |f| %>
+    <div class="row">
+      <div class="adv_search">
+        <div class="col-sm-12 searchrow ">
+          <div class="col-sm-2">
+            <span class="title">Property Type</span>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+
+                  <%= f.select( :listing_type_eq, Listing::LISTING_TYPES.map { |i| [i.titleize, i] }.unshift( [ 'All Properties', '']), {}, { class: "btn btn-white dropdown-toggle category"}) %>
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+
+                
+                  <%= f.select( :property_type_id_eq, PropertyType.all.map { |i| [i.description, i.id] }.unshift( [ 'All Property Types', '']), {}, { class: "btn btn-white dropdown-toggle property-type"}) %>
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+                
+
+                  <%= f.select( :property_sub_type_id_eq, PropertySubType.all.map { |i| [i.description, i.id, data: {"property-type"=>"#{i.property_type_id}"}] }.unshift( [ 'Type', '']), {}, { class: "btn btn-white dropdown-toggle subtype"}) %>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-sm-12 searchrow">
+        
+          <div class="col-sm-2">
+            <span class="title">Location & Price</span>
+          </div>
+          
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+                  <%### append Estate to District into a single dddw %>
+                  <% if params[:q] and params[:q][:district_id_eq] %>
+                    <% district = params[:q][:district_id_eq] %>
+                  <% else %>
+                    <% district = '' %>
+                  <% end %>
+                  <%= f.select( :district_id_eq, ( District.select('description', 'id', "'d' as district_or_estate").all + Estate.select('description', 'id', "'e' as district_or_estate").all).map { |i| [i.description, "#{i.district_or_estate}#{i.id}", data: {"district-or-estate"=>"#{i.district_or_estate}"}] }.unshift( [ 'All Locations', '']), {:selected => district}, { class: "btn btn-white dropdown-toggle district"}) %>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+
+                
+                  <%= f.select( :asking_price_lt, AskingPrice.all.map { |i| [i.description, i.id, data: {"listing-type"=>"#{i.listing_type}"}] }.unshift( [ 'Price', '']), {}, { class: "btn btn-white dropdown-toggle price"}) %>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+                
+
+                  <%= f.select( :tenure_id_eq, Tenure.all.map { |i| [i.description, i.id, data: {"property-type"=>"#{i.property_type_id}"}] }.unshift( [ 'Tenure', '']), {}, { class: "btn btn-white dropdown-toggle tenure"}) %>
+                
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        <div class="col-sm-12 searchrow ">
+          <div class="col-sm-2">
+            <span class="title">Property Details</span>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+                
+
+                  <%= f.select( :bedrooms_eq, Bedroom.all.map { |i| [i.description, i.id] }.unshift( [ 'Bedrooms', '']), {}, { class: "btn btn-white dropdown-toggle"}) %>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-3">
+            <div class="form-group adv">
+              <div class="selectdrop">
+                
+
+                  <%= f.select( :size_sqft_lt, SqftSizeArea.all.map { |i| [i.description, i.id] }.unshift( [ 'Floor Size', '']), {}, { class: "btn btn-white dropdown-toggle"}) %>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-6 no-padding">
+          <div class="form-group adv">
+            <% if params[:q] and params[:q][:searchtext] %>
+              <% searchtext = params[:q][:searchtext] %>
+            <% else %>
+              <% searchtext = '' %>
+            <% end %>
+            <%= f.text_field :searchtext, value: searchtext, placeholder: 'Keyword', class: 'form-control' %>
+            <br class="visible-xs hidden-sm" />
+          </div>
+        </div>
+        
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.submit class: "btn btn-red white" %>
+          </div>
+          <div class="form-group resetfield">
+            <button class="btn btn-red white" id="reset">Reset Search Fields</button>
+          </div>
+          <a href="#" class="search_toggle hidden-xs search_toggle_regular"><i class="fa fa-caret-down"></i></a>
+        </div>
+      </div>
+        
+    </div><!-- .row -->
+  <% end %><!-- form -->
+  </div>
+  <a href="#" class="search_toggle visible-xs hidden-sm search_toggle_mobile"><i class="fa fa-search"></i></a>
+</div>

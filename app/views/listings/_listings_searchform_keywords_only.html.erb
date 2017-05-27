@@ -1,0 +1,10 @@
+        <%#= search_form_for Listing.ransack( nil), class: "navbar-form pull-right", :html => {:id => "listings-searchform-keywords-only", :role => "search"} do |f| %>
+        <%= search_form_for Listing.ransack( nil), class: clazz, :html => {:id => "listings-searchform-keywords-only", :role => "search"} do |f| %>
+          <%# a href="/todo" class="btn btn-red disabled" data-no-turbolink="true">List Your Property</a %>
+          <div class="input-group add-on">
+            <%= f.text_field :searchtext, placeholder: 'Browse for Properties', class: 'form-control' %>
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        <% end %>

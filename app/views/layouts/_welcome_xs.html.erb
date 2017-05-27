@@ -1,0 +1,35 @@
+  <style>
+    #signup-bar-visible-xs {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    #signup-bar-visible-xs li {
+      float: left;
+    }
+    
+    #signup-bar-visible-xs li a, #signup-bar-visible-xs li span {
+      display: inline-block;
+      text-align: center;
+      padding: 5px 10px 0px 10px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    
+    #signup-bar-visible-xs li:first-child span {
+      padding-left: 0px;
+    }
+  </style>
+
+  <div class="container visible-xs">
+    <ul id="signup-bar-visible-xs">
+      <% if user_signed_in? %>
+        <li><span><%= "Welcomee, #{current_user.fullname}" %></span><li>
+        <li><%= link_to 'Log Out', destroy_user_session_path, method: :delete %><li>
+        <li><%= link_to '<i class="fa fa-user"></i>'.html_safe, edit_user_path %><li>
+      <% end %>
+    </ul>
+  </div>
+

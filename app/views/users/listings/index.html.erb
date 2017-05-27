@@ -1,0 +1,94 @@
+<% content_for :title, "My Property Listings" %>
+<% if @listings.length == 0 %>
+
+  <div id="content" class="mob-max">
+    <div class="resultsList">
+      <div class="row">
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h2 class="center">You have no listings</h2>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+  <%#= debug @listings %>
+
+  <div class="container contents">
+
+    <div class="row">
+      <div class="col-12">
+        <h1>My Property Listings</h1>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+                                  
+              <div>
+                
+                <div class="row header hidden-xs">
+                  <div class="col-md-6">
+                    <p><strong>LISTING NAME </strong></p>
+                  </div>
+                                        
+                  <div class="col-md-3">
+                    <p><strong>STATUS </strong></p>
+                  </div>
+
+                  <div class="col-md-3">
+                    <p><strong>ACTION </strong></p>
+                  </div>
+                </div>
+                      
+  <% @listings.each do |listing| %>
+                                   
+                <div class="<%= 'row ' + cycle('odd', 'even') %>">
+                  <div class="col-md-6">
+                    <br />
+                    <% s = listing_get_completeness_status listing %>
+                    <%= s[:link_to_listing] %>
+                    <br /><br />
+                  </div>
+
+                  <div class="col-md-3">
+                    <br />
+                    <p>
+                      <span class="visible-xs"><%= "Status: #{s[:status]}" %></span>
+                      <span class="hidden-xs"><%= s[:status] %></span>
+                    </p>
+                  </div>
+
+                  <div class="col-md-3">
+                    <br />
+                    <%= listing_get_action_buttons listing %>
+                    <br />
+                  </div>
+                </div>
+                                     
+  <% end %>                        
+                <p>&nbsp;</p>
+              </div>
+                    
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row dashboard_nav">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+<%#= render @listings %>

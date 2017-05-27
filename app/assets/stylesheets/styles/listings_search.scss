@@ -1,0 +1,24 @@
+.search-panel .adv_search .searchrow span {
+  font-family: "Open Sans",sans-serif,Arial !important;
+}
+
+
+.search-panel form#listing_search #reset {
+  font-family: "Open Sans",sans-serif,Arial !important;
+}
+
+.search-panel .form-group.adv {
+  margin-bottom: 0;
+  width: 100%;
+
+  input.form-control {
+    width: 100%;
+  }
+}
+
+.search_toggle{position:absolute;right:0;background:#E43455;color:#fff;height:40px;width:40px;text-align:center;font-size:18px;line-height:2;z-index:999}.search_toggle:focus{color:#fff !important}
+.search_toggle_mobile{position:relative;width:100%;}
+.search_toggle_regular{border-radius:5px;background:none;color:#999;border:1px solid}
+.search_toggle_regular:focus{color:#999 !important}
+
+.search_toggle_mobile i{color:#fff;}

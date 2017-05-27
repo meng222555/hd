@@ -1,0 +1,174 @@
+<% content_for :title, "Listings" %>
+<%= render 'listings_searchform' %>
+
+<script>
+  $(document).ready(function(){
+    // Done
+    //  dddw
+    //    listing_type cf asking_price
+    //    size_sqft
+    // TODO
+    //  dddw
+    //    DONE property_type cf property_sub_type
+    //    DONE property_type cf tenure
+    //    DONE property_type cf district, estate
+    //    DONE searchtext
+
+    $( '.listings.listings.index form#listing_search select#q_listing_type_eq').on('change', function(e) { 
+      var filter_asking_price = function (listing_type) {
+        if(listing_type=='') {
+          $( '.listings.listings.index form#listing_search select#q_asking_price_lt option').removeClass('hide');
+          return;
+        }
+
+        $( '.listings.listings.index form#listing_search select#q_asking_price_lt [data-listing-type="' + listing_type + '"]').removeClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_asking_price_lt option:not([data-listing-type="' + listing_type + '"])').addClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_asking_price_lt option[value=""]').removeClass('hide');
+      };
+
+      var listing_type = e.target.value;
+      filter_asking_price( listing_type);
+    });
+
+
+    $( '.listings.listings.index form#listing_search select#q_property_type_id_eq').on('change', function(e) { 
+      var filter_property_sub_type = function (property_type) {
+        if(property_type=='') {
+          $( '.listings.listings.index form#listing_search select#q_property_sub_type_id_eq option').removeClass('hide');
+          return;
+        }
+
+        $( '.listings.listings.index form#listing_search select#q_property_sub_type_id_eq [data-property-type="' + property_type + '"]').removeClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_property_sub_type_id_eq option:not([data-property-type="' + property_type + '"])').addClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_property_sub_type_id_eq option[value=""]').removeClass('hide');
+      };
+
+      var property_type = e.target.value;
+      filter_property_sub_type( property_type);
+
+      //////
+      // ditto tenure
+      var filter_tenure = function (property_type) {
+        if(property_type=='') {
+          $( '.listings.listings.index form#listing_search select#q_tenure_id_eq option').removeClass('hide');
+          return;
+        }
+
+        $( '.listings.listings.index form#listing_search select#q_tenure_id_eq [data-property-type="' + property_type + '"]').removeClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_tenure_id_eq option:not([data-property-type="' + property_type + '"])').addClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_tenure_id_eq option[value=""]').removeClass('hide');
+      };
+
+      filter_tenure( property_type);
+
+      //////
+      // ditto district/estate
+      var filter_district = function (property_type) {
+        if(property_type=='') {
+          $( '.listings.listings.index form#listing_search select#q_district_id_eq option').removeClass('hide');
+          return;
+        }
+
+        var district_or_estate = property_type == '1' ? 'e' : 'd'; // '1' => 'HDB' => 'estate'; otherwise 'Condo'/'Apartment' => 'district'
+
+        $( '.listings.listings.index form#listing_search select#q_district_id_eq [data-district-or-estate="' + district_or_estate + '"]').removeClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_district_id_eq option:not([data-district-or-estate="' + district_or_estate + '"])').addClass('hide');
+
+        $( '.listings.listings.index form#listing_search select#q_district_id_eq option[value=""]').removeClass('hide');
+      };
+
+      filter_district( property_type);
+
+    });
+
+
+
+
+    <% if params[:q].present? %>
+      var draw_asking_price = function() {
+        $( '.listings.listings.index form#listing_search select#q_listing_type_eq').change();
+        
+        <% if params[:q].key?("asking_price_lt") %>
+          $( '.listings.listings.index form#listing_search select#q_asking_price_lt').val( "<%= params[:q][:asking_price_lt] %>" );
+        <% elsif params[:q].key?("asking_price_gt") %>
+        
+          <% if params[:q]["asking_price_gt"] == '4999999' %>
+            $( '.listings.listings.index form#listing_search select#q_asking_price_lt').val('5000000+');
+          <% elsif params[:q]["asking_price_gt"] == '19999' %>
+            $( '.listings.listings.index form#listing_search select#q_asking_price_lt').val('20000+');
+          <% end %>
+          
+        <% end %>
+      }();
+
+      var draw_size_sqft = function () {
+        <% if params[:q].key?("size_sqft_lt") %>
+          $( '.listings.listings.index form#listing_search select#q_size_sqft_lt').val( "<%= params[:q][:size_sqft_lt] %>" );
+        <% elsif params[:q].key?("size_sqft_gt") %><%# gt 4999 %>
+          $( '.listings.listings.index form#listing_search select#q_size_sqft_lt').val('5000+');
+        <% end %>
+      }();
+
+      var draw_property_sub_type = function () {
+        $( '.listings.listings.index form#listing_search select#q_property_type_id_eq').change();
+      }();
+      
+    <% end %>
+
+
+    ////// clear search fields
+    $( '.listings.listings.index form#listing_search #reset').on('click', function(e) {
+      e.preventDefault();
+      // $( '.listings.listings.index form#listing_search')[0].reset();
+      $( '.listings.listings.index form#listing_search select').prop('selectedIndex',0);
+      $( '.listings.listings.index form#listing_search input[type="text"]').val('');
+    });
+
+
+    ////// hide or show advanced search
+    listingsSearchForm = $( '.listings.listings.index form#listing_search');
+    var searchPanelOpened = false;
+
+    listingsSearchForm.find('.fa-caret-down').removeClass('fa-caret-down').addClass('fa-caret-up');
+    $('.search_toggle').click(function(){
+      if (matchMedia('only screen and (max-width: 480px)').matches) {
+        $('.search-panel').slideToggle();
+      }else{
+        $('.adv_search').slideToggle();
+      }
+      
+      if(searchPanelOpened == true){
+        searchPanelOpened = false;
+        listingsSearchForm.find('.fa-caret-up').removeClass('fa-caret-up').addClass('fa-caret-down');
+      }else{
+        searchPanelOpened = true;
+        listingsSearchForm.find('.fa-caret-down').removeClass('fa-caret-down').addClass('fa-caret-up');
+      }
+    });
+    
+  });
+</script>
+
+
+
+
+  <div class="container contents">
+
+    <div class="row">
+      <div class="col-12">
+        <h1>Listings</h1>
+        <div class="container">
+
+<%= render partial: 'listings/listings_search_results', locals: { listings: @listings, zero_result_message: 'No Listings found' } %>
+
+        </div>
+      </div>
+    </div>
+  </div>

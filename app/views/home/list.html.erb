@@ -1,0 +1,162 @@
+    <div class="container contents list">
+	<div class="row">
+		<div class="col-sm-12">
+			<div id="start">
+				<h1>Start Selling/Renting your Property in Minutes</h1>
+				<p>No commission. No hidden fees.</p>
+				<p>Just take our Free or Premium Listing with e-Transaction Wizard!</p>
+				<p>DirectHome is a one-stop listing portal and knowledge-driven platform.</p>
+				<p>Let's go!</p>
+				<p>&nbsp;</p>
+			</div>
+
+			<div id="sell" style="display:none;">
+      <!-- div id="sell" -->
+				<h1>Start Selling your Property in Minutes</h1>
+
+				<p>No commission. No hidden fees.</p>
+
+				<p>Just take our Free or Premium Listing with e-Transaction Wizard!</p>
+
+				<p>DirectHome is a one-stop listing portal and knowledge-driven platform.</p>
+				<p>Let's go!</p>
+				<p>&nbsp;</p>
+			</div>
+		
+			<div id="rent" style="display:none;">
+				<h1>Start Renting your Property in Minutes</h1>
+
+				<p>No commission. No hidden fees.</p>
+
+				<p>Just take our Free or Premium Listing with e-Transaction Wizard!</p>
+
+				<p>DirectHome is a one-stop listing portal and knowledge-driven platform.</p>
+				<p>Let's go!</p>
+				<p>&nbsp;</p>
+			</div>
+			<br>
+		</div>
+	</div>
+    <div class="row">
+      <div class="col-sm-12 dashboard_card">
+        
+        <div class="center">
+		
+          
+        </div>
+        <div class="row">
+          <div class="col-sm-6 center">
+            <a href="#" class="btn actionBtn nofloat" id="sell_button">I want to list my property for sale</a>
+          </div>
+          <div class="col-sm-6 center">
+            <a href="#" class="btn actionBtn nofloat" id="rent_button">I want to list my property for rent</a>
+          </div>
+        </div>
+		
+        <div class="row list_options half_opaque" id="sell_options" style="display:none">
+          <div class="col-sm-6">
+            <ul class="pricing_table">
+              <li class="header">Sell<br>
+                Free Listing</li>
+              <li><strong>Free</strong></li>
+              <li>Free Listing</li>
+			  <li>Call & Messaging system</li>
+              <li>Email Support</li>
+              <li class="footer">
+                  <!--a href="#" data-toggle="modal" data-target="#loginModal" class="signup btn btn-lg btn-red" >List Your Property</a-->
+                  <%#= form_tag( "#{create_a_sell_listing_path}") do %>
+                    <!--button type="submit" style="color:#fff" class="signup btn btn-lg btn-red">List Your Property</button-->
+                  <%# end %>
+                  <%= form_to_create_a_sell_listing %>
+                <p>&nbsp;</p>
+                <%= link_to 'Check if your property is eligible', eligibility_sell_path, class: "small", data: { turbolinks: false } %>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <ul class="pricing_table">
+              <li class="header">Sell<br>
+                Premium Listing</li>
+              <li><strong>S$800</strong></li>
+			  <li>Verified Listing</li>
+			  <li>Call & Messaging system</li>
+			  <li>Personalised Support</li>
+			  <li>e-Option To Purchase </li>
+			  <li>e-Transaction Wizard</li>
+			  <li>Property Report </li>
+			  <li>Financial Calculation</li>
+			  <li>Timeline Schedule</li>
+			 <li> Cloud Storage of Documents & IDs</li>
+			  <li>Questions? <a href="/support">Call us!</a></li>
+			  
+			  
+              <!-- <li>Step-by-Step Process Flow</li>
+              <li>All Forms  How to Fill</li>
+              <li>Online Marketing Platform</li>
+              <li>Financial Calculations</li>
+              <li>Timeline Schedule</li>
+              <li>Viewing Messaging System</li>
+              <li>Questions?  Call Support!</li> -->
+              <li class="footer">
+                    <!--a href="#" data-toggle="modal" data-target="#loginModal" class="signup btn btn-lg btn-red" >List Your Property</a-->
+                    <%#= form_tag( "#{create_a_sell_listing_path}") do %>
+                      <!--button type="submit" style="color:#fff" class="signup btn btn-lg btn-red">List Your Property</button-->
+                    <%# end %>
+                    <%= form_to_create_a_sell_listing %>
+                <p>&nbsp;</p>
+                <%= link_to 'Check if your property is eligible', eligibility_sell_path, class: "small", data: { turbolinks: false } %>
+              </li>
+            </ul>
+          </div>
+        </div>
+		
+        <div class="row list_options half_opaque" id="rent_options" style="display:none">
+          <div class="col-sm-6">
+            <ul class="pricing_table">
+              <li class="header">Rent<br>
+                Free Listing</li>
+              <li><strong>Free</strong></li>
+			  <li>Free Listing</li>
+			  <li>Call & Messaging system</li>
+			  <li>Email Support</li>
+              <li class="footer">
+                  <a href="#" data-toggle="modal" data-target="#loginModal" class="signup btn btn-lg btn-red" >List Your Property</a>
+                <p>&nbsp;</p>
+                <%= link_to 'Check if your property is eligible', eligibility_rent_path, class: "small", data: { turbolinks: false } %>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <ul class="pricing_table">
+              <li class="header">Rent<br>
+                Premium Listing</li>
+              <li><strong>S$80</strong></li>
+			  <li>Verified Listing</li>
+			  <li>Call & Messaging system</li>
+			  <li>Personalised Support</li>
+			  <li>e-Tenancy Agreement </li>
+			  <li>e-Transaction Wizard</li>
+			  <li>Property Report </li>
+			  <li>Cloud Storage of Documents & IDs</li>
+			  <li>Questions? <a href="/support">Call us!</a></li>
+			  
+              <!-- <li>1 Verified Rental Listing</li>
+              <li>Home-Owner Dashboard</li>
+              <li>Step by Step Transaction Wizard</li>
+              <li>Email & Phone Support</li>
+              <li>Unlimited Images</li>
+              <li>Documents Generator: Easy Paperwork with e-Sign</li>
+              <li>Documents Cloud Storage: Lost paperwork? Never with Cloud Storage</li>
+              <li>Payment Escrow Service</li>
+              <li>Video Player Support</li> -->
+              <li class="footer">
+                  <a href="#" data-toggle="modal" data-target="#loginModal" class="signup btn btn-lg btn-red" >List Your Property</a>
+                <p>&nbsp;</p>
+                <%= link_to 'Check if your property is eligible', eligibility_rent_path, class: "small", data: { turbolinks: false } %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.btn-red{background:#E43455;}
+a.btn-red{color:#fff !important;}
+.btn-curve{border-radius:4px}
+
+.half_opaque {
+   opacity: 0.5;	
+}
+
+.fade.in {
+   opacity: 1;
+   -webkit-transition: opacity 0.5s linear;
+      -moz-transition: opacity 0.5s linear;
+       -ms-transition: opacity 0.5s linear;
+        -o-transition: opacity 0.5s linear;
+           transition: opacity 0.5s linear;
+}
+
+.white{
+  color:#fff;
+}
+
+.container.contents h4{
+  color: rgb(110, 113, 117);
+}

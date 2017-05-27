@@ -1,0 +1,22 @@
+nav#nav1 #listings-searchform-keywords-only {
+  margin-top: 0px;
+}
+
+#nav2 .navbar-right li {
+  &.margin-10-top-bottom {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  a.signup-xs {
+    &:hover {
+      background-color: #000000 !important;
+    }
+
+    &:not( :hover ) { /* mouseout */
+      background-color: #E43455 !important;
+    }
+
+    display: inline;
+  }
+}

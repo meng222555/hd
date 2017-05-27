@@ -1,0 +1,6 @@
+          <% @listing.photos.order("seq").all.each do |p| %>
+            <%= content_tag :li, class: "imgli", id: "photo_to_sort_#{p.id}" do %>
+              <%= image_tag p.picture.url(:thumb), {class: "thumb"} %>
+              <%= link_to_destroy( p) %>
+            <% end %>
+          <% end %>

@@ -1,0 +1,14 @@
+.home.home.index {
+  #hero-container {
+    background-color: #845941;
+    
+    &.home-index {
+      
+      .home-title h1 {
+        font-weight: bold;
+        font-size: 1.15em;
+        color: #ffffff;
+      }
+    }
+  }
+}

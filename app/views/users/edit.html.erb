@@ -1,0 +1,16 @@
+<% content_for :title, "My Profile" %>
+
+<%= render 'form', user: @user %>
+
+<div class="modal fade" id="errors_summary_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body content">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#errors_summary_modal").modal({show:false});
+</script>

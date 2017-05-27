@@ -1,0 +1,15 @@
+<% content_for :title, "My Saved Listings" %>
+
+  <div class="container contents">
+
+    <div class="row">
+      <div class="col-12">
+        <h1>My Saved Listings</h1>
+        <div class="container">
+
+<%= render partial: 'listings/listings_search_results', locals: { listings: @listings, zero_result_message: 'No Saved Listings found' } %>
+
+        </div>
+      </div>    
+    </div>
+  </div>

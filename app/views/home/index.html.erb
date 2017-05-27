@@ -1,0 +1,59 @@
+<div id="hero-container" class="home-index">
+  <div class="home-caption">
+    <div class="home-title"><h1>Simply Sell, Buy,  Rent <br>your Home, Directly!</h1></div>
+  </div>
+  <div class="search-panel visible-xs">
+    <%= render partial: 'listings/listings_searchform_keywords_only', locals: { clazz: "form-inline"} %>
+  </div><!-- .search-panel -->
+</div><!-- #hero-container -->
+<div class="highlight dark">
+  <h2 class="osLight">Why Transact Directly?</h2>
+  <div class="row pb40">
+    <div class="col-sm-6">
+      <div>
+        <h2 class="s-main">Home Owners</h2>
+				<ul class="home-why">
+          <li><p>Saves you significant sum of money in commission!<br></p><p>&nbsp;</p></li>
+					<li><p>Direct communication to buyers and tenants!</p></li>
+					<li><p>Clear and concise selling and renting step-by-step process flow.</p></li>
+					<li><p>You understand your Home best, naturally you are the best person to promote your Home!</p></li>
+					<li><p>Quality photos taken at your most convenient time, without agent’s watermark logo!</p></li>
+					<li><p>Not pressured to sell or rent!</p></li>
+        </ul>
+      </div>
+    </div>
+		<div class="col-sm-6">
+      <div>
+        <h2 class="s-main">Home Seekers</h2>
+        <ul class="home-why">
+          <li><p> Absolutely no cost to you! Its Free!</p></li>
+          <li><p>Direct communication & negotiation to sellers and landlords!</p></li>
+          <li><p>Clear & concise step-by-step buying and renting process flow.</p></li>
+          <li><p>Unique and genuine individual listings! No more duplicate or dummy  listings!</p></li>
+          <li><p> Quality photos taken by Home Owners, without agent’s watermark logo, for better browsing experience!</p></li>
+          <li><p>No pressure to buy or rent!</p></li>
+        </ul>
+      </div>
+    </div>
+	</div>
+</div>
+<!-- Content -->
+<% if @listings.length > 0 %>
+  <%## cache( cache_key_for_listings_search_results_paginated count: @listings.length, updated_at: Listing.maximum( updated_at), page: params[:page], per: @listings.limit_value, q_params: "recent-listings") do %>
+  <%# Using "updated_at: Listing.maximum( updated_at)" is expensive as all paginated pages will refresh, instead of just the page with updated item %>
+  <%# cache( cache_key_for_listings_search_results_paginated count: @listings.length, updated_at: max_updated_at( @listings), page: params[:page], per: @listings.limit_value, q_params: "recent-listings") do %>
+  <div class="home-wrapper">
+    <div class="home-content">
+      <h2 class="osLight">Recently Listed Properties</h2>
+      <%= render partial: "listings/listings_search_results_unit", locals: { listings: @listings, clazz: "row pb40"} %>
+    </div>
+  </div>
+  <%# end %>
+
+<% end %>
+<div class="highlight">
+  <div class="h-title osLight">Selling your house?</div>
+  <div class="h-text osLight">Save thousands by doing it yourself.</div>
+	<p>&nbsp;</p>
+</div>
+<!-- Footer -->

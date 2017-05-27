@@ -1,0 +1,254 @@
+  <div class="document">
+    <% if content_for?(:prelude) %>
+      <div class="row">
+        <div class="col-sm-12 dashboard_card" id="next_steps" style="margin:0 0 30px 0">
+          
+          
+            <%= yield( :prelude) %>
+          
+      
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="row">
+      <div class="col-sm-12">
+          <div class=""><!--div class="singleTop"-->
+              <div class="summary">
+                  <div class="row">
+              <div class="col-sm-7">
+                <% photos = @listing.photos.order( :seq).all %>
+                <% unless photos.present? %>
+                  <%# shows missing image since listing has no cover %>
+                  <%= image_tag @listing.cover.url(:medium), class: "photo photo-missing-show" %>
+                <% else %>
+                  <div id="carouselFull" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators">
+                      
+                      <% (1..photos.size).each do |i| %>
+                        <%= content_tag( "li", '', :class => '', :data => {:target => '#carouselFull', :slide_to => i-1}) %>
+                      <% end %>
+                    
+                    </ol>
+                    <div class="carousel-inner">
+                      <% photos.each_with_index do |p, i| %>
+                      
+                        <% if i > 0 %>
+                          <div class="item">
+                        <% else %>
+                          <div class="item active">
+                        <% end %>
+                        
+                        <%= image_tag p.picture.url( :medium) %>
+                        
+                          <div class="container">
+                            <div class="carousel-caption">
+                            </div>
+                          </div>
+                        </div>
+                        
+                      <% end %>
+                    </div>
+                    <% if photos.length > 1 %>
+                      <a class="left carousel-control" href="#carouselFull" role="button" data-slide="prev"><span class="fa fa-chevron-left"></span></a>
+                      <a class="right carousel-control" href="#carouselFull" role="button" data-slide="next"><span class="fa fa-chevron-right"></span></a>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+                      <div class="col-sm-5">
+                          <div class="summaryItem">
+                              <h1 class="pageTitle">
+                    <!-- Kool at hg 36 -->
+                    <%= @listing.listing_name %>
+                  </h1>
+                  <div class="type">
+                    
+                    <!-- HDB For Sale -->
+                    <%= "#{@listing.property_type_id.blank? ? '' : @listing.property_type.description} #{@listing.listing_type.titlecase}" %>
+                  
+                  </div>
+                              <!-- div class="address">6 Port Road, 530333 Singapore</div -->
+                              <div class="address"><%= "#{@listing.address.blank? ? '' : @listing.address + ','} #{@listing.postal_code} Singapore" %></div>
+                  <!-- div class="price">$560,346</div -->
+                  <div class="price"><%= number_to_currency @listing.asking_price, :precision => 0 %></div>
+                  <div class="property-overview">
+                    <ul>
+                      <li>
+                        <span>Status</span>
+                        <!-- strong>For Sale</strong -->
+                        <strong><%= @listing.status %></strong>
+                      </li>
+                      <li>
+                        <span>Type</span>
+                        <!-- strong>HDB</strong -->
+                        <strong><%= "#{@listing.property_type_id.blank? ? '' : @listing.property_type.description}" %></strong>
+                      </li>
+                      <li>
+                        <span>Sub-Type</span>
+                        <!-- strong>Jumbo</strong -->
+                        <strong><%= "#{@listing.property_sub_type_id.blank? ? '' : @listing.property_sub_type.description}" %></strong>
+                      </li>
+                      
+                        
+                            <li>
+                              <span>$psf</span> 
+                              <!-- strong>
+                                $47
+                              </strong -->
+                              <strong>
+                                <%= listing_get_psf_amount @listing %>
+                              </strong>
+                            </li>
+                        
+                      
+                        <li>
+                          <span>Tenure</span>
+                          <!-- strong>99 Years Leasehold</strong -->
+                          <strong><%= "#{@listing.tenure_id.blank? ? '' : @listing.tenure.description}" %></strong>
+                        </li>
+                                
+                                <% unless @listing.show_unit == 0 %>
+                        <li>
+                          <span>Unit</span>
+                          <!-- strong>flor12-#3</strong -->
+                          <strong>
+                                  <%= "#{@listing.floor.blank? ? '' : @listing.floor}-#{@listing.unit_no.blank? ? '' : @listing.unit_no}" %>
+                            </strong>
+                        </li>
+                        <% end %>
+                        
+                      <li>
+                        <span>Size</span>
+                        <!-- strong>
+                            1100
+                           sqm
+                        </strong -->
+                        <strong>
+                          <%= "#{@listing.size_area} #{@listing.size_unit.downcase}" if !@listing.size_area.blank? %>
+                        </strong>
+                       </li>
+                      <li>
+                        <span>Bedrooms</span>
+                        <!-- strong>11</strong -->
+                        <strong><%= @listing.bedrooms %></strong>
+                      </li>
+                      <li>
+                        <span>Bathrooms</span>
+                        <!-- strong>10</strong -->
+                        <strong><%= @listing.bathrooms %></strong>
+                      </li>
+                      <li>
+                        <span>Storey</span>
+                        <!-- strong>Middle</strong -->
+                        <strong><%= @listing.floor_type %></strong>
+                      </li>
+                      <li>
+                        <span>Furnishing</span>
+                        <!-- strong>Fully Furnished</strong -->
+                        <strong><%= @listing.furnishing %></strong>
+                      </li>
+                    </ul>
+                  </div>
+                              <div class="clearfix"></div>
+                          </div>
+                      </div>
+                  </div>
+            <div class="row listing_description">
+              <div class="col-sm-12">
+                  <div class="description">
+                      <h3>Description</h3>
+                      <p><%= simple_format @listing.description %></p>
+                  </div>
+
+
+                    <div class="amenities">
+                        <h3>Features</h3>
+                        <div class="row">
+                          <% @listing.features.order("description").each_slice(4) do |slice| %>
+                              <% slice.each do |feature| %>
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 amItem">
+                                  <span class="fa fa-star"></span> <%= feature.description %> 
+                                </div>
+                              <% end %>
+                          <% end %>
+                        </div>
+                        <div class="row">
+                          <% @listing.sceneries.order("description").each_slice(4) do |slice| %>
+                              <% slice.each do |scenery| %>
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 amItem">
+                                  <span class="fa fa-star"></span> <%= scenery.description %> 
+                                </div>
+                              <% end %>
+                          <% end %>
+                        </div>
+                        <div class="row">
+                          <% @listing.amenities.order("description").each_slice(4) do |slice| %>
+                              <% slice.each do |amenity| %>
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 amItem">
+                                  <span class="fa fa-star"></span> <%= amenity.description %> 
+                                </div>
+                              <% end %>
+                          <% end %>
+                        </div>
+                    </div>
+      
+                    <!-- div class="share">
+                        <h3>Share this Listing</h3>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 shareItem">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.directhome.com.sg/listings/b29f4d4b-95a6-43a3-b6eb-5d4d7835587f" class="btn btn-sm btn-round btn-o btn-facebook" target="_blank"><span class="fa fa-facebook"></span> Facebook</a>
+                            </div -->
+                            <!-- <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 shareItem">
+                                <a href="#" class="btn btn-sm btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span> Twitter</a>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 shareItem">
+                                <a href="#" class="btn btn-sm btn-round btn-o btn-google"><span class="fa fa-google-plus"></span> Google+</a>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 shareItem">
+                                <a href="#" class="btn btn-sm btn-round btn-o btn-pinterest"><span class="fa fa-pinterest"></span> Pinterest</a>
+                            </div> -->
+
+                        <!-- /div>
+                    </div -->
+              </div>
+            </div>
+            <div class="row">
+              <style>
+                    #map2 {
+                      width: 100%;
+                      height: 400px;
+                    }
+              </style>
+              <div id="map2"></div>
+              <script>
+                var map2;
+                  var lat2 = <%= @listing.lat.blank? ? 1.2751 : @listing.lat %>;
+                  var lng2 = <%= @listing.lng.blank? ? 103.799127 : @listing.lng %>;
+                  function initMap() {
+                      var mapDiv = document.getElementById('map2');
+                      map2 = new google.maps.Map(mapDiv, {
+                        center: {lat: lat2, lng: lng2},
+                    zoom: 15,
+                    mapTypeId: 'roadmap',
+                    scrollwheel: false
+                      });
+                  addMarker({ lat: lat2, lng: lng2 });
+                  }
+                function addMarker(position) {
+                  var marker = new google.maps.Marker({
+                  position: position,
+                    map: map2
+                  });
+                }
+                $('#nav_preview').addClass('active');
+              </script>
+                <!--script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVE3IrICGHSdEnrtFHMGFNAVHmFgyirZM&callback=initMap" async defer></script-->
+                <script>initMap();</script>
+            </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+  </div>

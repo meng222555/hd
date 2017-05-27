@@ -1,0 +1,82 @@
+defaults: &defaults
+  free_file_hosts:
+    sabercathost:
+      url:
+        site_name_logo: https://sabercathost.com/d1OS/directhome_for_mail.png
+  site_title: HomeDirect
+  # relative_url_root: project/homedirect
+  # relative_url_root: ''
+  email: contact@somefakeysite123.com
+  phone: +65 9999 9999
+  copyright: HomeDirect © copyright All Rights Reserved 2099
+
+development:
+  <<: *defaults
+  site:
+    hostname: somefakeysite123.com
+    protocol: https
+    port: 4300
+    url: somefakeysite123.com
+    url_with_protocol: https://somefakeysite123.com:4300/
+    email: dev-contact@somefakeysite123.com
+  mailer:
+    perform_deliveries: true
+    smtp_settings:
+      address: smtp.gmail.com
+      port: 587
+      authentication: plain
+      user_name: ming222555@gmail.com
+      password: atthezoo123
+      domain: gmail.com
+      enable_starttls_auto: true
+  devise:
+    mailer_sender: dev-support@somefakeysite123.com
+  secret_key_base: f23eb14bb085eea90a556617361da44e7a8c4208d9e8802671301e4661a53c2f907aa6a45acf54d0cce1ae26c980e83cf27ca6b48016fb910f5cc51cff0f5b81
+  database:
+    adapter: postgresql
+    encoding: unicode
+    database: zzz_development
+    pool: 5
+    username: some_postgres_user_acc
+    password:
+
+test:
+  <<: *defaults
+  secret_key_base: 93b4895da21d9205305bbfb33a08b3000372a619bfebc097922057132fbeda57442ccfa8be670d64358734bd68e31d8505e7846e05c3b60f5a20ce457621a988
+  database:
+    adapter: postgresql
+    encoding: unicode
+    database: zzz_test
+    pool: 5
+    username: some_postgres_user_acc
+    password:
+
+production:
+  <<: *defaults
+  site:
+    hostname: somefakeysite123.com
+    protocol: https
+    port: 443
+    url: somefakeysite123.com
+    url_with_protocol: https://somefakeysite123.com/
+    email: support@somefakeysite123.com
+  mailer:
+    perform_deliveries: true
+    smtp_settings:
+      address: smtp.gmail.com
+      port: 587
+      authentication: plain
+      user_name: meng222555@gmail.com
+      password: password_123
+      domain: gmail.com
+      enable_starttls_auto: true
+  devise:
+    mailer_sender: support@somefakeysite123.com
+  secret_key_base: 71a4895da21d932130ebc097922057132fbeda57442ccfa85bbfb33a08b3000372a619bfbe670d64358734bd68e31d85b60f5a2333457621a98805e7846e05c3
+  database:
+    adapter: postgresql
+    encoding: unicode
+    database: zzz_production
+    pool: 5
+    username: some_postgres_user_acc
+    password:

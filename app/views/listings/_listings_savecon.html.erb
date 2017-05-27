@@ -1,0 +1,23 @@
+<div class="savecon">
+  <% if user_signed_in? %>
+
+		<% if controller_name == 'listings' %>
+
+      <% if listing.user_id != current_user.id %>
+
+	      <% if @currentuser_savedlistings.key?(listing.id) %>
+	        <span data-listing-id="<%= listing.id %>" data-saved-listing-id="<%= @currentuser_savedlistings[listing.id] %>" class="figsave"><i class="fa fa-trash-o"></i></span>
+	      <% else %>
+		      <span data-listing-id="<%= listing.id %>" data-saved-listing-id="" class="figsave"><i class="fa fa-floppy-o"></i></span>
+	      <% end %>
+
+	    <% end %>
+
+		<% elsif controller_name == 'saved_listings' %><%## Only listings that been saved are retrieved for currentuser %>
+
+	    <span data-listing-id="<%= listing.id %>" data-saved-listing-id="<%= @currentuser_savedlistings[listing.id] %>" class="figsave"><i class="fa fa-trash-o"></i></span>
+
+		<% end %>
+
+  <% end %>
+</div>

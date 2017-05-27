@@ -1,0 +1,86 @@
+App.Users = App.Users || {};
+
+App.Users.edit = function(){
+	window.addEventListener("scroll", sticky_relocate);
+  
+  $( 'form.edit_user').find(':submit').on('click', function(e) { // Update btn clicked
+  	e.preventDefault();
+    
+	  var update_user = function() {
+            
+      var form_id = $( 'form.edit_user').attr('id');
+      var fd = new FormData( document.getElementById( form_id));
+      
+      var returnedJson = null;
+      
+      $("body").addClass("disabled");
+      $('#spinner').removeClass('hide');
+      
+	    $.ajax({
+//      url: '/<%= AppConfig['relative_url_root'] %>' + "<%= Rails.application.routes.url_helpers.send(:user_path) %>" + '.json',
+        url: "<%= Rails.application.routes.url_helpers.send(:user_path) %>" + '.json',
+	      dataType : "json",
+	      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	      data: fd,
+	      processData: false,
+	      contentType: false,
+	      method: 'PUT'
+	    }).done(function(data)
+	    {
+	      // $( 'form.edit_user span.field_errors').removeClass('field_errors').html('').addClass('hide');
+        $( 'form.edit_user span.gap').html('');
+	      $( 'form.edit_user span.field_errors').removeClass('field_errors').addClass('hide');
+        $('.users.users.edit #errors_summary').addClass('hide');
+        $('#errors_summary_modal').modal('hide');
+	   }).fail(function(jqXHR, textStatus)
+	    {
+	      returnedJson = JSON.parse( jqXHR.responseText);
+        
+	      var errors_summary = returnedJson.errors_summary; // array of [#field,error] pairs
+	                                                        // e.g. ["#user_email_confirmation","Error blah ..."]
+        // alert( JSON.stringify( errors_summary));
+        
+        var form_input_fields = [];
+        $('.users.users.edit form.edit_user input.field').each( function(i,obj) {
+          form_input_fields.push( $(obj).attr('id'))
+        });
+        // alert(form_input_fields);
+        
+        var $errors_summary_listitems = $('.users.users.edit #errors_summary ul').html('');
+        
+        $.each( errors_summary, function(i,obj) { 
+          $errors_summary_listitems.append('<li><a href="' + obj[0] + '" class=\"errors_summary\">' + obj[1] + '</a></li>');
+        });
+        
+        $('.users.users.edit #errors_summary').removeClass('hide');
+	      $('#errors_summary_modal .content').html( $('#errors_summary').html());
+	      $('#errors_summary_modal').modal('show'); // show modal
+        
+	      var field_errors = returnedJson.field_errors; // hash of "#field":"errors"
+	                                                    // e.g. "field_errors":{"user_email":"","user_first_name":"","user_last_name":"","user_email_confirmation":"Email confirmation doesn't match Email"}
+	      $.each( $('.users.users.edit form.edit_user input.field'), function(i,obj) {
+          var input_field_id = $(obj).attr('id');
+          // alert( input_field_id);
+          if ( field_errors[ input_field_id]) {
+            $( 'form.edit_user label[for=' + input_field_id + ']').next().removeClass('hide').addClass('field_errors').html( field_errors[ input_field_id]);
+            $( 'form.edit_user #' + input_field_id).prev().html('&nbsp;');
+          }
+          else {
+            $( 'form.edit_user label[for=' + input_field_id + ']').next().removeClass('field_errors').addClass('hide');
+            $( 'form.edit_user #' + input_field_id).prev().html('');
+          }
+	      });
+	   }).always(function()
+	    {
+	      $('#spinner').addClass('hide');
+	      $("body").removeClass("disabled");
+	    }); // ajax end
+      
+	  }(); // fn update_user end
+
+  });
+  
+} // App.Users.edit end
+
+$(document).ready(App.Users.edit);
+// $(document).on("turbolinks:load", App.Users.Listings.preview.publish);

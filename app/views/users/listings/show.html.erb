@@ -1,0 +1,30 @@
+<% content_for :prelude do %>
+  <% if @listing.published? %>
+    <h4>Your listing is published &amp; viewable to public</h4>
+    <%= link_to "My Listings", user_listings_path, class: "btn btn-red btn-curve" %>
+  <% else %>
+
+    <%= form_for @listing, url: publish_user_listing_path( @listing) do |f| %>
+
+
+      <% if @listing.publishable? %>
+        <h4>Your listing is ready to go live</h4>
+        <p>If everything looks good, go ahead and publish your listing!</p>
+        <button type="submit" class="btn btn-red btn-curve white" id="btn_publish_listing">Publish Listing</button>
+      <% else %>
+        <h4>Your listing isn&#39;t ready to go live</h4>
+        <ul>
+          <li>To enable publishing, complete your listing information</li>
+          <li>You&#39;ll need at least 1 photo to get your Listing published</li>
+        </ul>
+        <br />
+        <button type="submit" class="btn btn-red btn-curve white" id="btn_publish_listing" disabled>Publish Listing</button>
+      <% end %>
+
+      &nbsp; <%= link_to "Edit", edit_user_listing_path( @listing), class: "btn btn-red btn-curve", data: { turbolinks: false }, id:"btn_edit" %> <%############ removing turbolinks false causes "google.maps.event.addDomListener(window, 'load', this.updateMap);" to fail at ListingFormComponent.js.jsx ############ %>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render 'shared/listing_to_show' %>

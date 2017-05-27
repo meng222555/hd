@@ -1,0 +1,75 @@
+App.listings_savecon = function(){
+
+    $(".savecon").click(function(){
+        var create_or_delete_saved_listing = function(savecon_obj) {
+
+          var $saved_listing_id;
+
+          $saved_listing_id = $(savecon_obj).find('.figsave').attr('data-saved-listing-id');
+          
+          $("body").addClass("disabled");
+          $('#spinner').removeClass('hide');
+          
+          if($saved_listing_id) {
+            // Delete saved_listing rec from db            
+            $.ajax({
+//              url: '/<%= AppConfig['relative_url_root'] %>' + "<%= Rails.application.routes.url_helpers.send(:user_saved_listings_path) %>" + "/" + $saved_listing_id,
+              url: "<%= Rails.application.routes.url_helpers.send(:user_saved_listings_path) %>" + "/" + $saved_listing_id,
+              type: 'DELETE'
+            }).done(function(data)
+            {
+              var $fa_icon = $(savecon_obj).find('.figsave .fa');
+              $fa_icon.removeClass('fa-trash-o');
+              $fa_icon.addClass('fa-floppy-o');
+
+              $(savecon_obj).find('.figsave').attr('data-saved-listing-id', '');
+           }).fail(function(jqXHR, textStatus)
+            {
+              alert(jqXHR.responseText);
+           }).always(function()
+            {
+              $('#spinner').addClass('hide');
+              $("body").removeClass("disabled");
+            });
+
+           return;
+          }
+
+          // Create saved_listing rec
+
+          var $listing_id;
+
+          $listing_id = $(savecon_obj).find('.figsave').attr('data-listing-id');
+          
+          $.ajax({
+//            url: '/<%= AppConfig['relative_url_root'] %>' + "<%= Rails.application.routes.url_helpers.send(:user_saved_listings_path) %>",
+            url: "<%= Rails.application.routes.url_helpers.send(:user_saved_listings_path) %>",
+            data: "listing_id=" + $listing_id,
+            type: 'POST'
+          }).done(function(data)
+          {
+            var $fa_icon = $(savecon_obj).find('.figsave .fa');
+            $fa_icon.removeClass('fa-floppy-o');
+            $fa_icon.addClass('fa-trash-o');
+
+            $(savecon_obj).find('.figsave').attr('data-saved-listing-id', data);
+         }).fail(function(jqXHR, textStatus)
+          {
+alert(123);
+            alert(jqXHR.responseText);
+         }).always(function()
+          {
+            $('#spinner').addClass('hide');
+            $("body").removeClass("disabled");
+          });
+
+        }; // create_or_delete_saved_listing fn end
+
+        create_or_delete_saved_listing( this);
+
+    }); // click fn end
+
+}
+
+$(document).ready(App.listings_savecon);
+// $(document).on("turbolinks:load", App.listings_savecon);

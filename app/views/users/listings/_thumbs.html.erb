@@ -1,0 +1,49 @@
+<style type="text/css">
+  img.blur {
+    -webkit-filter: blur(1px);
+    filter: blur(2px);
+  }
+</style>
+
+<div id="thumbs-gallery" class="hide">
+  <%= hidden_field_tag 'index_url', index_url %>
+  <h2 class="left">Images <span class="small" style="color:#000;">(Tip: Landscape photos display better!)</span></h2>
+<a class="btn btn-red btn-curve upload-button" id="upload-button">Upload New Image</a>
+  <p>&nbsp;</p>
+  <p id="how2drag">Drag to re-order images. The 1st image will be used as your cover image.</p>
+  <!-- p id="how2drag">You'll need at least 1 photo to get your Listing published.</p -->
+  <div class="form-group inlineblock  fullwidth">
+    <div class="col-sm-12 nopadding">
+      <div class="thumbs">
+        <ul class="sortable ui-sortable">
+          <%# sample output li %>
+          <%# !-- li id="photo_to_sort_248" class="imgli ui-sortable-handle">
+            <img class="thumb" src="blob:http%3A//192.168.44.44%3A3000/a3b950b6-2e78-4261-93db-41ab6e0674b4">
+            <a rel="nofollow" class="destroy" data-id="248" data-no-turbolink="true" data-remote="true" data-method="delete" href="/listings/1/photos/248">
+              <i class="fa fa-trash"></i>
+            </a>
+          </li -- %>
+          
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+<a class="btn btn-red btn-curve upload-button" id="upload-button2">Upload New Image</a>
+</div>
+
+<%= form_for @listing.photos.new, url: user_listing_photos_path( @listing), html: { class: 'hide' } do |f| %>
+  
+  <%= f.file_field :picture %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= form_tag sort_user_listing_photos_path( @listing), :id => "form_sort_photos", class: 'hide' do %>
+  <%= hidden_field_tag 'photos_to_sort', ' ' %>
+  <%= submit_tag %>
+<% end %>

@@ -1,0 +1,30 @@
+#content .page-wrapper .page-content .nav-tabs li.active p {
+  color: #fff;
+}
+
+#content .page-wrapper .page-content .nav-tabs li a {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#content .page-wrapper .page-content .nav-tabs li a:hover {
+  background-color: #e8e8e8;
+}
+
+#content .page-wrapper .page-content .nav-tabs li a.fade {
+   opacity: 0.5; /* 0 */
+   -webkit-transition: opacity 3s linear;
+      -moz-transition: opacity 3s linear;
+       -ms-transition: opacity 3s linear;
+        -o-transition: opacity 3s linear;
+           transition: opacity 3s linear;
+ }
+
+#content .page-wrapper .page-content .nav-tabs li a.fade.in {
+   opacity: 1;
+   -webkit-transition: opacity 3s linear;
+      -moz-transition: opacity 3s linear;
+       -ms-transition: opacity 3s linear;
+        -o-transition: opacity 3s linear;
+           transition: opacity 3s linear;
+ }

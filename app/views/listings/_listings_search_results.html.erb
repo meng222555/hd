@@ -1,0 +1,45 @@
+<% if @listings.length > 0 %>
+
+  <div id="content" class="mob-max">
+    <!--div class="resultsList"-->
+      
+      <%= render partial: "listings/listings_search_results_unit", locals: { listings: listings} %>
+      
+      <%#= Must not cache paginator, o/w if new items created with quantity > per, then the new page that is supposed to appear won't do so. %>
+      <%#= paginate @listings %><%# to mv to _listings_search_results.html.erb %>
+    <!--/div-->
+  </div>
+  
+  <%#= "debug #{page_entries_info( @listings)}" %>
+  
+  <div style="margin-top: -20px;">
+    <div class="resultsList">
+      <%= paginate @listings %>
+    </div>
+  </div>
+
+<% else %>
+  
+  <div id="content" class="mob-max">
+    <div class="resultsList">
+      <div class="row">
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h2 class="center"><%= zero_result_message %></h2>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+      </div>
+    </div>
+  </div>
+  
+<% end %>

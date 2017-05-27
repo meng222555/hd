@@ -1,0 +1,32 @@
+<style>
+  a { text-decoration: none;}
+  .confirm_button {
+  	padding: 4px 6px 6px 6px;
+  	margin-top: 5px; border-radius: 4px;
+  	background-color: #E43455;
+  }
+  .confirm_button a {
+  	color: #fff;
+  }
+  .heading {
+  	text-align: center;
+  	width:100%;
+  }
+</style>
+
+<div class="heading">
+  <img src="<%= AppConfig['free_file_hosts']['sabercathost']['url']['site_name_logo'] %>">
+  <h2>Thank you for signing up.</h2>
+</div>
+
+<p>Greetings from <%= AppConfig['site_title'] %>!</p><br/>
+<%# Assume @resource of model User %>
+<p>Welcome <%# @email %><%= @resource.fullname %>!</p><br/>
+
+<p>Please confirm your account on <%= link_to( AppConfig['site']['url'], AppConfig['site']['url_with_protocol']) %></p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><button class="confirm_button"><%#= link_to 'Confirm my account', user_confirmation_url(@resource, confirmation_token: @token ) %><%= link_to 'Confirm my account', user_confirm_url(@resource, confirmation_token: @token ) %></button></p><br/>
+
+<p>If you have any questions regarding the service or any of the step-by-step guided flow, please don’t hesitate to call us at <%= AppConfig['phone'] %> (our customer service is open from 10am-8pm, 7 days a week). Alternatively you can email us at <%= mail_to AppConfig['site']['email'] %></p>

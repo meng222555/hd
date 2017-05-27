@@ -1,0 +1,58 @@
+.field_errors {
+  box-sizing: border-box;
+  color: #ff0000;
+  font-family: "Open Sans",sans-serif,Arial;
+  font-size: 13px;
+  line-height: 18px;
+  background-color: #fcf8e3;
+  border: 2px solid #faebcc;
+  padding:5px;
+  width:100%;
+  display:inline-block;
+}
+
+#errors_summary {
+  box-sizing: border-box;
+  background-color: #fcf8e3;
+  border: 2px solid #faebcc;
+  margin: 0;
+
+  ul {
+    margin: 0;
+  }
+  
+  li {
+    color: #ff0000;
+  }
+
+  p, a {
+    color: #ff0000;
+    font-family: "Open Sans",sans-serif,Arial;
+    font-size: 13px;
+  }
+
+  p {
+    margin: 0;
+    padding: 5px;
+  }
+}
+
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
+
+#property_type_ctrls {
+  background-color: #ffccd4; /* C14242 */
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+
+  label {
+    /* color: #fff; */
+  }
+}
+
+.checkbox.custom-checkbox {
+  margin-top: 0px;
+}

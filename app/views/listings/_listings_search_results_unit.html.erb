@@ -1,0 +1,36 @@
+      <% listings.each_slice(3) do |slice| -%>
+        <!-- div class="row" -->
+        <% clazz = clazz || "row" %>
+        <div class="<%= clazz %>">
+        
+          <% slice.each do |listing| %>
+          
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="card">
+                <div class="figure">
+                  <%= link_to listing_path( listing) do %>
+                    <% image_tag listing.cover.url(:medium) %>
+                  <% end %>
+                  <%= render partial: 'listings/listings_savecon', locals: { listing: listing} %>
+                </div>
+                <!-- div class="figureinfo" -->
+                <div class="<%= listing.published > 0 ? "figureinfo" : "figureinfo background-beige radius-4" %>" >
+                  <div class="figureleft">
+                    <%= link_to listing_path( listing) do %>
+                      <h2><%= listing.listing_name %></h2>
+                      <div class="cardPrice"><%= "#{listing.status}: #{ number_to_currency( listing.asking_price, precision: 0)}" %></div>
+                      <div class="cardAddress"><%= listing.address %></div>
+                      <ul class="cardFeat">
+                        <li><span>Bedrooms </span><%= listing.bedrooms %></li>
+                        <li><span>Size </span><%= "#{ sprintf( '%g', listing.size_sqft)} sqft" if listing.size_sqft %></li>
+                      </ul>
+                    <% end %>
+                  </div>
+                  <div class="figureright">
+                  </div>                 
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>

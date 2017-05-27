@@ -1,0 +1,118 @@
+<div class="container contents">
+  <div id="errors_summary" class="hide">
+    <p>&nbsp; Error(s) prohibited this user from being updated:</p>
+
+    <ul>
+    <%#### ajax to populate %>
+    </ul>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <h1>My Profile</h1>
+      <h4>Fields with asterisk * are required</h4>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= form_for(user, url: user_path) do |f| %>
+              <div id="sticky-anchor"></div>
+              <div id="stickable">
+                <div id="update_user_button">
+                  <br />
+                  <%= f.submit 'Update', :class => "btn btn-red white" %> <%### button ###%>
+                </div>
+              </div>
+              <br />                        
+              
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :first_name, "FIRST NAME" %> *
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.text_field :first_name, autofocus: true, class: "field form-control", :maxlength => 30, :size => 30 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :last_name, "LAST NAME" %> *
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.text_field :last_name, class: "field form-control", :maxlength => 30, :size => 30 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :email, "EMAIL" %> *
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.email_field :email, class: "field form-control", :maxlength => 50, :size => 50 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :email_confirmation, "EMAIL CONFIRMATION" %> *
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.email_field :email_confirmation, :value => user.email, class: "field form-control", :maxlength => 50, :size => 50 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+                            
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :address, "ADDRESS" %>
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.text_field :address, class: "field form-control", :maxlength => 30, :size => 30 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :postal_code, "POSTAL CODE" %>
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.text_field :postal_code, class: "field form-control", :maxlength => 15, :size => 15 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= f.label :phone, "PHONE" %>
+                  <span class="hide"></span><%##### vs "field_errors" ###%>
+                </div>
+                <div class="col-sm-8">
+                  <span class="gap"></span>
+                  <%= f.text_field :phone, class: "field form-control", :maxlength => 15, :size => 15 %>
+                </div>
+                <p>&nbsp;</p>
+              </div>
+            
+            <% end %>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

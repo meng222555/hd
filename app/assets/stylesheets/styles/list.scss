@@ -1,0 +1,57 @@
+.list {
+
+  #start, #sell, #rent {
+    h1 {
+      margin-top: 60px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E43455;
+      padding-bottom: 15px;
+      font-size: 36px;
+    }
+  }
+
+  #start, #sell, #rent {
+    p {
+      font-family: "Open Sans", sans-serif !important;
+      color: #444444; /* rgb(68, 68, 68) */
+      font-size: 15px;
+    }
+  }
+
+  #sell_options, #rent_options {
+    li {
+      font-family: "Open Sans", sans-serif !important;
+      color: #444444; /* rgb(68, 68, 68) */
+      font-size: 15px;
+
+      &.header {
+        color: #fff;
+        font-size: 18px;
+      }
+
+      &.footer a {
+        font-size: 13px;
+
+        &.signup {
+          padding: 15px 30px;
+          font-weight: bold;
+          font-size: 14px;
+        }
+      }
+
+      a {
+        font-family: "Open Sans", sans-serif !important;
+        color: #E43455;
+        font-size: 15px;
+      }
+    }
+  }
+
+  #sell_button, #rent_button {
+    font-family: "Open Sans", sans-serif !important;
+    color: #E43455;
+    font-size: 13px;
+
+    &:hover { color: #fff};
+  }
+}

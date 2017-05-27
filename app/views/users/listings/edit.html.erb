@@ -1,0 +1,191 @@
+<% content_for :title, "List My Property" %>
+
+<%# amenities_of_listing":[{"id":2,"description":"Balcony","checked":""},
+  {"id":5,"description":"Playground","checked":""},
+  {"id":8,"description":"BBQ Pits","checked":""},
+  {"id":6,"description":"Private Pool","checked":""},
+  {"id":4,"description":"Mini-Mart","checked":""},
+  {"id":1,"description":"Air Conditioning","checked":""},
+  {"id":3,"description":"Park / Greenery View","checked":""},
+  {"id":7,"description":"Jacuzzi","checked":""}
+]
+%>
+
+<% sql = "select a.id, a.description, CASE WHEN b.scenery_id IS NULL THEN '' ELSE 'y' END as checked from sceneries a LEFT OUTER JOIN ( select scenery_id from listings_sceneries where listing_id = #{@listing.id}) b ON a.id=b.scenery_id ORDER BY a.description;" %>
+<% sceneries_of_listing = ActiveRecord::Base.connection.execute(sql) %>
+
+<% sql = "select a.id, a.description, CASE WHEN b.amenity_id IS NULL THEN '' ELSE 'y' END as checked from amenities a LEFT OUTER JOIN ( select amenity_id from amenities_listings where listing_id = #{@listing.id}) b ON a.id=b.amenity_id ORDER BY a.description;" %>
+<% amenities_of_listing = ActiveRecord::Base.connection.execute(sql) %>
+
+<% sql = "select a.id, a.description, CASE WHEN b.feature_id IS NULL THEN '' ELSE 'y' END as checked from features a LEFT OUTER JOIN ( select feature_id from features_listings where listing_id = #{@listing.id}) b ON a.id=b.feature_id ORDER BY a.description;" %>
+<% features_of_listing = ActiveRecord::Base.connection.execute(sql) %>
+
+<%= react_component 'ListingFormComponent', 
+  { record: @h, url: user_listing_path( @listing.id), errors_summary: [], options_for_property_type: PropertyType.all, options_for_property_sub_type: PropertySubType.all, options_for_bedroom: Bedroom.all, options_for_bathroom: Bathroom.all, retrieved_listing_name_is_blank: "#{@listing.listing_name.blank? ? true : false}",
+      listing_type: @listing.listing_type, 
+      options_for_tenure: Tenure.all, 
+      options_for_estate: Estate.all, 
+      options_for_district: District.all, 
+      options_for_furnishing: hashize_select_options_for_listing( Listing::FURNISHING_TYPES), 
+      options_for_floor_type: hashize_select_options_for_listing( Listing::FLOOR_TYPES), 
+      options_for_rental_type: hashize_select_options_for_listing( Listing::RENTAL_TYPES),
+      sceneries_of_listing: sceneries_of_listing,
+      amenities_of_listing: amenities_of_listing,
+      features_of_listing: features_of_listing}, 
+  { id:'listing_form_component', name:'listing_form_component'} 
+%>
+
+<!-- google map -->
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
+
+    <!-- input id="pac-input" hidden type="text" placeholder="Search Box" -->
+<input type="text" hidden value="<%= @listing.lat %>" id="location_lat">
+<input type="text" hidden value="<%= @listing.lng %>" id="location_lng">
+<!-- end, google map -->
+
+<div class="modal fade" id="errors_summary_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body content">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#errors_summary_modal").modal({show:false});
+</script>
+
+<%##############%>
+
+<div class="modal fade" id="thumbs_modal">
+  <div class="modal-dialog" style="width:90%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body content">
+        <%= render partial: 'thumbs', locals: {index_url: user_listing_photos_url( @listing.id)} %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div -->
+
+<script>
+  // $("#thumbs_modal").modal({show:false});
+  $("#thumbs_modal").modal({show:false, backdrop: 'static', keyboard: false});
+</script>
+
+<%##############%>
+
+<input type="text" hidden value="<%= user_listing_path @listing %>" id="preview_url">
+
+<div class="modal fade" id="preview_modal">
+  <div class="modal-dialog" style="width:90%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body content">
+        <%#= stub for render :show %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div -->
+
+<script>
+  // $("#preview_modal").modal({show:false});
+  $("#preview_modal").modal({show:false, backdrop: 'static', keyboard: false});
+</script>

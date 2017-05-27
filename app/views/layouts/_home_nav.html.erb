@@ -1,0 +1,22 @@
+<nav id="nav1" class="hidden-xs">
+  <div class="container-fluid">
+      <div class="home-nav">
+          <ul>
+            <% if user_signed_in? %>
+              <li>Welcome, <%= current_user.fullname %></li>
+              <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete, :class => "logout" %></li>
+              <li><%= link_to '<i class="fa fa-user"></i>'.html_safe, edit_user_path %></li>
+
+
+
+            <% else %>
+              <li><%= link_to 'Sign Up', new_user_registration_path, :class => "signup" %></li>
+              <li><%= link_to 'Sign In', new_user_session_path, :class => "login" %></li>
+            <% end %>
+            <li><%= link_for_list_a_property :class => "btn btn-red btn-curve", :'data-turbolinks' => "false" %> <%= render partial: 'listings/listings_searchform_keywords_only', locals: { clazz: "navbar-form pull-right"} %></li>
+
+
+          </ul>
+      </div>
+  </div>
+</nav>
