@@ -78,3 +78,5 @@ group :development do
   gem 'mina', '~> 1.0', '>= 1.0.6'
 #  gem 'mina', '0.3.8'
 end
+
+gem 'friendly_id', '~> 5.1.0'

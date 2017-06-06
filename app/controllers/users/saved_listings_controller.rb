@@ -6,7 +6,7 @@ class Users::SavedListingsController < ApplicationController
 
   def index # cf listings controller
     sql = "SELECT listing_name, listing_type, asking_price, address, bedrooms, size_sqft, size_sqm, published, "\
-      "  a.id, cover_file_name, cover_content_type, cover_file_size, a.updated_at, status, user_id "\
+      "  a.id, cover_file_name, cover_content_type, cover_file_size, a.updated_at, status, user_id, slug "\
       "  FROM listings a, "\
       "     ( SELECT listing_id, id, created_at FROM saved_listings WHERE user_id = " + current_user.id.to_s + ") b "\
       "  WHERE a.id = b.listing_id AND a.published = 1 "\

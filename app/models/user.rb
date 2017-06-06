@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # extend FriendlyId
+  # friendly_id :slug_candidates, use: :slugged # *** Must add slug col to users table ***
+
   validates_length_of :first_name, :minimum => 3, :maximum => 6
   
   has_many :listings
@@ -18,4 +21,19 @@ class User < ApplicationRecord
   def fullname
     "#{first_name.titleize} #{last_name.titleize}"
   end
+
+  # def friendlyize_email
+  #   "#{first_name.titleize} #{last_name.titleize}"
+  #   email.tr("@", "-").tr(".", "-")
+  # end
+
+  ## Try building a slug based on the following fields in
+  ## increasing order of specificity.
+  # def slug_candidates
+  #   [
+  #     :fullname,
+  #     :friendlyize_email
+  #   ]
+  # end
+
 end

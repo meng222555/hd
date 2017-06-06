@@ -110,8 +110,10 @@ class Users::Listings::PhotosController < ApplicationController
   private
     def set_listing
       # @listing = current_user.listings.find( params[:listing_id])
-      @listing = Listing.where("id = ? AND user_id = ?", params[:listing_id], current_user.id).first
-      if @listing.nil?
+      # @listing = Listing.where("id = ? AND user_id = ?", params[:listing_id], current_user.id).first
+      @listing = Listing.friendly.find(params[:listing_id])
+      # if @listing.nil?
+      if @listing.user_id != current_user.id
         redirect_to user_listings_path
       end
     end

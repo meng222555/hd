@@ -94,8 +94,11 @@ class Users::ListingsController < ApplicationController
 
   private
     def set_listing
-      @listing = Listing.where("id = ? AND user_id = ?", params[:id], current_user.id).first
-      if @listing.nil?
+      # @listing = Listing.where("id = ? AND user_id = ?", params[:id], current_user.id).first
+      # @listing = Listing.where("slug = ? AND user_id = ?", params[:id], current_user.id).first
+      @listing = Listing.friendly.find(params[:id])
+      # if @listing.nil?
+      if @listing.user_id != current_user.id
         redirect_to user_listings_path
       end
     end

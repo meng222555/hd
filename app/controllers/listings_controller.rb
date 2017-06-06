@@ -93,7 +93,9 @@ class ListingsController < ApplicationController
 
   private
     def set_listing
-      @listing = Listing.where( :id => params[:id]).first
+      # @listing = Listing.where( :id => params[:id]).first
+      # @listing = Listing.where( :slug => params[:id]).first
+      @listing = Listing.friendly.find(params[:id])
       if @listing.nil?
         redirect_to listings_path
       end

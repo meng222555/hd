@@ -1,6 +1,9 @@
 class Listing < ApplicationRecord
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   default_scope { order('listings.published DESC, listings.published_at DESC, listings.created_at DESC') }
-  scope :selection_columns_for_paginated_listings, -> (pageno, per = Kaminari.config.default_per_page) { select( "listing_name, listing_type, asking_price, address, bedrooms, size_sqft, size_sqm, published, id, cover_file_name, cover_content_type, cover_file_size, listings.updated_at, status, user_id").page( pageno).per( per).all }
+  scope :selection_columns_for_paginated_listings, -> (pageno, per = Kaminari.config.default_per_page) { select( "listing_name, listing_type, asking_price, address, bedrooms, size_sqft, size_sqm, published, id, cover_file_name, cover_content_type, cover_file_size, listings.updated_at, status, user_id, slug").page( pageno).per( per).all }
 
   # has_attached_file :cover, styles: { medium: "500x500>", thumb: "200x200>" }, default_url: "/images/:style/missing.png"
   # has_attached_file :cover, styles: { medium: "600x600>" }, default_url: "/images/:style/missing.jpg"
@@ -70,6 +73,14 @@ class Listing < ApplicationRecord
     else
       return true
     end
+  end
+  
+  # Try building a slug based on the following fields in
+  # increasing order of specificity.
+  def slug_candidates
+    [
+      :listing_name
+    ]
   end
 
 end
