@@ -51,6 +51,8 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'factory_girl_rails', '~> 4.7'
   gem 'faker', '~> 1.7', '>= 1.7.3'
+  gem 'rspec-rails', '~> 3.4' # https://www.sitepoint.com/learn-the-first-best-practices-for-rails-and-rspec/
+  gem 'capybara', '~> 2.5'
 end
 
 group :development do
@@ -77,6 +79,14 @@ gem 'kaminari', '~> 0.17.0'
 group :development do
   gem 'mina', '~> 1.0', '>= 1.0.6'
 #  gem 'mina', '0.3.8'
+end
+
+group :test do
+  gem 'shoulda-matchers', '~> 3.0', require: false
+  gem 'database_cleaner', '~> 1.5'
+  gem 'launchy', '~> 2.4', '>= 2.4.3'
+  gem 'selenium-webdriver', '~> 2.53', '>= 2.53.4'
+  
 end
 
 gem 'friendly_id', '~> 5.1.0'

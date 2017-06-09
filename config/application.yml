@@ -35,20 +35,39 @@ development:
   database:
     adapter: postgresql
     encoding: unicode
-    database: zzz_development
+    database: home_direct_development
     pool: 5
-    username: some_postgres_user_acc
+    username: jerry
     password:
 
 test:
   <<: *defaults
-  secret_key_base: 93b4895da21d9205305bbfb33a08b3000372a619bfebc097922057132fbeda57442ccfa8be670d64358734bd68e31d8505e7846e05c3b60f5a20ce457621a988
+  site:
+    hostname: minghuei.com.sg
+    protocol: https
+    port: 4301
+    url: minghuei.com.sg
+    url_with_protocol: https://minghuei.com.sg:4301
+    email: dev4301-contact@somefakeysite123.com
+  mailer:
+    perform_deliveries: true
+    smtp_settings:
+      address: smtp.gmail.com
+      port: 587
+      authentication: plain
+      user_name: ming222555@gmail.com
+      password: atthezoo123
+      domain: gmail.com
+      enable_starttls_auto: true
+  devise:
+    mailer_sender: dev4301-support@somefakeysite123.com
+  secret_key_base: f23eb14bbae26c980e83cf27ca6b48016fb910f5085eea90a556617361da44e7a8c4208d9e8802671301e4661a53c2f907aa6a45acf54d0cce1cc51cff0f5b81
   database:
     adapter: postgresql
     encoding: unicode
-    database: zzz_test
+    database: home_direct_test
     pool: 5
-    username: some_postgres_user_acc
+    username: jerry
     password:
 
 production:

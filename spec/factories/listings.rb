@@ -2,47 +2,24 @@ FactoryGirl.define do
 
   factory :listing do
     listing_type 'FOR SALE'
-    user_id 1
+    user_id 123
+    rental_type nil
+    status 'FOR SALE'
+  end
 
-    rental_type {
-      if listing_type == 'FOR RENT'
-        ['Whole Unit', 'Room Only'].shuffle[0]
-      end
-    }
-
-    sequence(:property_type_id, (1..3).cycle) { |n| n } # 1 'HDB', 2 'Condominium/Apartment', 3 'Landed Property'
-
-    property_sub_type_id {
-      if property_type_id == 1
-        (17..29).to_a.shuffle[0]
-      elsif property_type_id == 2
-        (1..5).to_a.shuffle[0]
-      elsif property_type_id == 3
-        (6..16).to_a.shuffle[0]
-      end
-    }
-
-    tenure_id {
-      if listing_type == 'FOR SALE'
-        if property_type_id == 1
-          2
-        elsif property_type_id == 2
-          (1..2).to_a.shuffle[0]
-        elsif property_type_id == 3
-          (1..2).to_a.shuffle[0]
-        end
-      end
-    }
-
+  factory :publishable_listing, parent: :listing do
+    property_type_id      { PropertyType.pluck(:id).sample }
+    property_sub_type_id  { PropertySubType.pluck(:id).sample }
+    tenure_id             { Tenure.pluck(:id).sample }
+    district_or_estate    { ['d', 'e'].sample }
     district_id {
-      unless property_type_id == 1
-        (1..28).to_a.shuffle[0]
+      if district_or_estate == 'd'
+        District.pluck(:id).sample
       end
     }
-
     estate_id {
-      if property_type_id == 1
-        (1..27).to_a.shuffle[0]
+      if district_or_estate == 'e'
+        Estate.pluck(:id).sample
       end
     }
 
@@ -54,57 +31,39 @@ FactoryGirl.define do
       Faker::Address.postcode
     }
 
-   show_unit {
-      [0,1].shuffle[0] # 0 false
+    size_area {
+      (93..5432).to_a.sample
     }
 
-   floor {
-      [ nil,0,1,2,4,5,6,7,8,9,10,11,12,13,14,15,16].shuffle[0]
-    }
-
-   unit_no {
-      "#{floor}-#{Faker::Address.building_number}"
-    }
-
-    size {
-      ( (93..5432).to_a << nil).shuffle[0]
-    }
-
-    uom {
-      if property_type_id == 1
-        'sqm'
-      elsif property_type_id == 2 or property_type_id == 3
-        'sqft'
+    size_unit {
+      if district_or_estate == 'e'
+        'SQM'
+      else
+        'SQFT'
       end
     }
 
-    bedrooms {
-      ( (1..10).to_a << nil).shuffle[0]
-    }
-
-    bathrooms {
-      ( (1..10).to_a << nil).shuffle[0]
-    }
+    bedrooms             { Bedroom.pluck(:description).sample }
+    bathrooms             { Bathroom.pluck(:description).sample }
 
     furnishing {
-      [ nil, 'Unfurnished', 'Partially Furnished', 'Fully Furnished'].shuffle[0]
+      [ 'Unfurnished', 'Partially Furnished', 'Fully Furnished'].sample
     }
 
     floor_type {
-      [ nil, 'Ground', 'Low', 'Middle', 'High', 'Penthouse'].shuffle[0]
-    }
-
-    description {
-      [ nil, Faker::University.name].shuffle[0]
+      [ 'Ground', 'Low', 'Middle', 'High', 'Penthouse'].sample
     }
 
     listing_name {
-      [ nil, Faker::Space.star].shuffle[0]
+      Faker::Space.star
     }
 
     asking_price {
-      [ nil, "#{Faker::Address.building_number}00"].shuffle[0]
+      "#{Faker::Address.building_number}00"
     }
+  end
 
+  factory :published_listing, parent: :publishable_listing do
+    published  1
   end
 end
